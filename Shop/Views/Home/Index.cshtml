@@ -1,0 +1,57 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["HomePage"] = true;
+}
+
+<div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/icon/HomePage.png" class="d-block w-100" alt="HomePage">
+        </div>
+        <div class="carousel-item">
+            <img src="/icon/HomePage2.png" class="d-block w-100" alt="HomePage">
+        </div>
+        <div class="carousel-item">
+            <img src="/icon/HomePage3.png" class="d-block w-100" alt="HomePage">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="bg-light">
+    <div class="container py-4">
+        <h2 class="pb-4 text-center">Newest Products</h2>
+        <div class="row mb-5 g-3">
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <div class="rounded border shadow p-3 text-center h-100">
+                        <img src="/Images/@product.ImageFileName" class="img-fluid" alt="..."
+                             style="height: 180px; object-fit: contain" />
+                        <hr />
+                        <h5 class="py-2">@product.Name</h5>
+                        <p>
+                            Brand: @product.Brand<br />
+                            Category: @product.Category
+                        </p>
+                        <h4 class="mb-3">$@(product.Price)</h4>
+                        <a class="btn btn-primary btn-sm mb-2" asp-controller="Store" 
+                            asp-action="Details" asp-route-id="@product.Id" role="button">Details</a>
+                        <button type="button" class="btn btn-warning btn-sm mb-2">
+                            Add to Cart <i class="bi bi-cart4"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
