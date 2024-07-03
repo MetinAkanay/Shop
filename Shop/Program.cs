@@ -9,7 +9,7 @@ namespace Shop
     public class Program
     {
         
-        public static async void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -23,15 +23,14 @@ namespace Shop
             });
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
-            options =>
+                options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-
+                    options.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -53,17 +52,14 @@ namespace Shop
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-            // create the roles and the first admin user if not available yet
             using (var scope = app.Services.CreateScope())
             {
-                var userManager = scope.ServiceProvider.GetService(typeof(UserManager<ApplicationUser>)) 
+                var userManager = scope.ServiceProvider.GetService(typeof(UserManager<ApplicationUser>))
                     as UserManager<ApplicationUser>;
-                var roleManager = scope.ServiceProvider.GetService(typeof(RoleManager<IdentityRole>)) 
+                var roleManager = scope.ServiceProvider.GetService(typeof(RoleManager<IdentityRole>))
                     as RoleManager<IdentityRole>;
 
                 await DatabaseInitializer.SeedDataAsync(userManager, roleManager);
-
             }
 
 

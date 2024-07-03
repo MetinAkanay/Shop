@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Shop.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shop.Services
 {
@@ -11,13 +8,13 @@ namespace Shop.Services
         public static async Task SeedDataAsync(UserManager<ApplicationUser>? userManager,
             RoleManager<IdentityRole>? roleManager)
         {
-            if (userManager == null || roleManager == null)
+            if(userManager == null || roleManager == null)
             {
-                Console.WriteLine("UserManager or RoleManager is null => exit");
+                Console.WriteLine("userManager or roleManager is null => exit");
                 return;
             }
 
-            // Check if we have the admin role
+            //check if we have the admin role 
             var exists = await roleManager.RoleExistsAsync("Admin");
             if (!exists)
             {
@@ -25,7 +22,7 @@ namespace Shop.Services
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
 
-            // Check if we have the seller role
+            //check if we have the seller role 
             exists = await roleManager.RoleExistsAsync("Seller");
             if (!exists)
             {
@@ -33,7 +30,7 @@ namespace Shop.Services
                 await roleManager.CreateAsync(new IdentityRole("Seller"));
             }
 
-            // Check if we have the client role
+            //check if we have the client role 
             exists = await roleManager.RoleExistsAsync("Client");
             if (!exists)
             {
@@ -41,7 +38,7 @@ namespace Shop.Services
                 await roleManager.CreateAsync(new IdentityRole("Client"));
             }
 
-            // Check if we have at least one admin user
+            //check if whe have at least one admin user or not
             var adminUsers = await userManager.GetUsersInRoleAsync("Admin");
             if (adminUsers.Any())
             {
@@ -49,7 +46,8 @@ namespace Shop.Services
                 return;
             }
 
-            // Create the admin user
+
+            //create the admin user
             var user = new ApplicationUser()
             {
                 FirstName = "Admin",
@@ -64,9 +62,9 @@ namespace Shop.Services
             var result = await userManager.CreateAsync(user, initialPassword);
             if (result.Succeeded)
             {
-                // Set the user role
+                // set the user role
                 await userManager.AddToRoleAsync(user, "Admin");
-                Console.WriteLine("Admin user created successfully! Please update the initial password.");
+                Console.WriteLine("Admin user created succesfully! Please update the initial password");
                 Console.WriteLine("Email: " + user.Email);
                 Console.WriteLine("Initial password: " + initialPassword);
             }
