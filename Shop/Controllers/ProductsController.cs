@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
 using Shop.Services;
 
 namespace Shop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("/Admin/[Controller]/{action=Index}/{id?}")]
     public class ProductsController : Controller
     {
@@ -18,12 +20,12 @@ namespace Shop.Controllers
         }
 
 
-        public IActionResult Index(int pageIndex, string? search, string? column, string? orderBy)   
+        public IActionResult Index(int pageIndex, string? search, string? column, string? orderBy)
         {
             IQueryable<Product> query = context.Products;
 
             // search functionality
-            if(search != null)
+            if (search != null)
             {
                 query = query.Where(p => p.Name.Contains(search) || p.Brand.Contains(search) || p.Category.Contains(search));
             }
@@ -42,9 +44,9 @@ namespace Shop.Controllers
                 orderBy = "desc";
             }
 
-            if(column == "Name")
+            if (column == "Name")
             {
-                if(orderBy == "asc")
+                if (orderBy == "asc")
                 {
                     query = query.OrderBy(p => p.Name);
                 }
@@ -99,7 +101,7 @@ namespace Shop.Controllers
             }
             else
             {
-                if(orderBy == "asc")
+                if (orderBy == "asc")
                 {
                     query = query.OrderBy(p => p.Id);
                 }
