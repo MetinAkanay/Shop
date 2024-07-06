@@ -7,7 +7,7 @@
 <div id="carouselExample" class="carousel slide">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="/icon/HomePage.png" class="d-block w-100" alt="HomePage">
+            <img src="/icon/HomePage1.png" class="d-block w-100" alt="HomePage">
         </div>
         <div class="carousel-item">
             <img src="/icon/HomePage2.png" class="d-block w-100" alt="HomePage">
@@ -45,7 +45,7 @@
                         <h4 class="mb-3">$@(product.Price)</h4>
                         <a class="btn btn-primary btn-sm mb-2" asp-controller="Store" 
                             asp-action="Details" asp-route-id="@product.Id" role="button">Details</a>
-                        <button type="button" class="btn btn-warning btn-sm mb-2">
+                        <button type="button" class="btn btn-warning btn-sm mb-2" onclick="addToCart(this, @product.Id)">
                             Add to Cart <i class="bi bi-cart4"></i>
                         </button>
                     </div>
